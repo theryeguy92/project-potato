@@ -4,6 +4,6 @@ num_layers: 6
 num_heads: 8
 latent_dim: 64  # Experiment with 64, 128, 256, etc.
 ff_dim: 2048
-dropout: 0.1  # e.g., 0.1, 0.2 for regularization
+dropout: 0.1  # 0.1, 0.2 for regularization
 max_position_embeddings: 2048  # For rotary embeddings
 base: 10000  # Base for rotary embeddings

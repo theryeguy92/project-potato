@@ -1,0 +1,80 @@
+# Training Configuration for Potato MLA LLM
+
+# ============================================================================
+# Optimizer Settings
+# ============================================================================
+learning_rate: 3.0e-4  # Peak learning rate (3e-4 is standard for small LLMs)
+weight_decay: 0.01     # L2 regularization strength (prevents overfitting)
+betas: [0.9, 0.95]     # Adam beta parameters (momentum terms)
+eps: 1.0e-8            # Adam epsilon for numerical stability
+
+# ============================================================================
+# Learning Rate Scheduler
+# ============================================================================
+warmup_steps: 100       # Linear warmup steps (stabilizes early training)
+min_lr_ratio: 0.1       # Minimum LR as ratio of peak (final LR = 0.1 * learning_rate)
+
+# ============================================================================
+# Training Settings
+# ============================================================================
+epochs: 10              # Number of training epochs
+batch_size: 8           # Batch size per GPU
+max_seq_length: 512     # Maximum sequence length for training
+
+# ============================================================================
+# Regularization & Stability
+# ============================================================================
+gradient_clip: 1.0      # Gradient clipping norm (prevents exploding gradients)
+dropout: 0.1            # Dropout rate (already in model_config, but here for reference)
+
+# ============================================================================
+# Mixed Precision Training
+# ============================================================================
+use_amp: true           # Use automatic mixed precision (faster training, less memory)
+
+# ============================================================================
+# Checkpoint Settings
+# ============================================================================
+checkpoint_dir: "checkpoints"
+save_every_epoch: 1     # Save checkpoint every N epochs
+keep_last_n_checkpoints: 3  # Keep only last N checkpoints (saves disk space)
+save_best_only: false   # If true, only save when validation loss improves
+
+# ============================================================================
+# Logging Settings
+# ============================================================================
+log_dir: "logs"
+log_every_n_steps: 10   # Log metrics every N steps
+use_tensorboard: false  # Enable TensorBoard logging
+use_wandb: false        # Enable Weights & Biases logging
+wandb_project: "potato-mla"  # W&B project name
+wandb_run_name: null    # W&B run name (null = auto-generate)
+
+# ============================================================================
+# Data Settings
+# ============================================================================
+dataset_name: "tiny_shakespeare"
+train_split: "train"
+num_workers: 0          # DataLoader workers (0 = main process only, good for small datasets)
+shuffle: true           # Shuffle training data
+
+# ============================================================================
+# Validation Settings (TODO: implement validation)
+# ============================================================================
+validate: false         # Run validation during training
+val_split: "test"       # Validation split name
+val_every_n_epochs: 1   # Validate every N epochs
+val_batch_size: 16      # Validation batch size (can be larger since no gradients)
+
+# ============================================================================
+# Device Settings
+# ============================================================================
+device: "cuda"          # Device to train on (cuda/cpu)
+seed: 42                # Random seed for reproducibility
+
+# ============================================================================
+# Advanced Settings
+# ============================================================================
+compile_model: false    # Use torch.compile for faster training (requires PyTorch 2.0+)
+gradient_accumulation_steps: 1  # Accumulate gradients for effective larger batch size
+

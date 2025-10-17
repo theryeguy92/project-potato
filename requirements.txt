@@ -1,4 +1,6 @@
 torch==2.3.0
-datasets
 transformers
 pyyaml
+python-dotenv
+numpy
+requests
